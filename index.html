@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#080d12">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="JDX Pocket">
+  <meta name="description" content="Твоя маленькая карманная система: задачи, заметки и фокус.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <title>JDX Pocket</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><div class="brand-icon">J</div><div><div class="brand-name">JDX <span>POCKET</span></div><div class="eyebrow">PERSONAL SPACE / 01</div></div></div>
+      <button id="themeBtn" class="icon-btn" aria-label="Сменить акцент" title="Сменить акцент">◈</button>
+    </header>
+
+    <main>
+      <section class="hero panel">
+        <div class="hero-grid"></div>
+        <div class="eyebrow">ТВОЁ ПРОСТРАНСТВО</div>
+        <h1 id="greeting">Привет, исследователь<span>.</span></h1>
+        <p>Маленькие шаги тоже двигают большие идеи.</p>
+        <div class="date-line"><span class="pulse"></span><span id="today">ЗАГРУЗКА ДАТЫ…</span><span class="date-divider">/</span><span id="clock">--:--</span></div>
+      </section>
+
+      <section class="stats-grid">
+        <div class="stat panel"><div class="stat-label">ЗАДАЧИ ГОТОВЫ</div><div class="stat-number"><span id="doneCount">0</span><small id="taskRatio">/ 0</small></div><div class="meter"><i id="progressBar"></i></div></div>
+        <div class="stat panel"><div class="stat-label">ЗАМЕТОК</div><div class="stat-number" id="noteCount">0</div><div class="stat-foot">ТВОИ ИДЕИ · ТВОИ ПРАВИЛА</div></div>
+      </section>
+
+      <nav class="tabs" aria-label="Разделы">
+        <button class="tab active" data-tab="home">⌂ <span>Обзор</span></button>
+        <button class="tab" data-tab="tasks">☷ <span>Задачи</span></button>
+        <button class="tab" data-tab="notes">▤ <span>Заметки</span></button>
+        <button class="tab" data-tab="focus">◉ <span>Фокус</span></button>
+      </nav>
+
+      <section id="homeView" class="view active">
+        <div class="section-heading"><div><div class="eyebrow">ПАНЕЛЬ УПРАВЛЕНИЯ</div><h2>Твой день</h2></div><span class="section-mark">01 / 04</span></div>
+        <div class="panel quick-add">
+          <div class="quick-icon">＋</div><div class="quick-content"><h3>Добавить задачу</h3><p>Зафиксируй следующий шаг.</p></div>
+          <button class="round-btn" id="quickTaskBtn" aria-label="Добавить задачу">↗</button>
+        </div>
+        <div class="section-heading compact"><h2>На сегодня</h2><button class="text-btn" data-goto="tasks">Все задачи ↗</button></div>
+        <div id="homeTasks" class="task-list"></div>
+        <div class="section-heading compact"><h2>Последние заметки</h2><button class="text-btn" data-goto="notes">Все заметки ↗</button></div>
+        <div id="homeNotes" class="note-list"></div>
+        <div class="quote panel"><div class="quote-mark">“</div><p>Не нужно видеть всю лестницу. Достаточно сделать следующий шаг.</p><span>JDX / DAILY REMINDER</span></div>
+      </section>
+
+      <section id="tasksView" class="view">
+        <div class="section-heading"><div><div class="eyebrow">НЕ ДЕРЖИ ВСЁ В ГОЛОВЕ</div><h2>Задачи</h2></div><span class="section-mark">02 / 04</span></div>
+        <form id="taskForm" class="panel form-panel">
+          <label for="taskInput">НОВАЯ ЗАДАЧА</label>
+          <div class="input-row"><input id="taskInput" maxlength="120" placeholder="Например, придумать новую идею…" autocomplete="off" required><button class="primary-btn" type="submit">Добавить</button></div>
+        </form>
+        <div class="filter-row"><button class="filter active" data-filter="all">Все</button><button class="filter" data-filter="open">Активные</button><button class="filter" data-filter="done">Готовые</button><button id="clearDone" class="text-btn">Очистить готовые</button></div>
+        <div id="tasksList" class="task-list"></div>
+      </section>
+
+      <section id="notesView" class="view">
+        <div class="section-heading"><div><div class="eyebrow">СОХРАНИ МЫСЛЬ</div><h2>Заметки</h2></div><span class="section-mark">03 / 04</span></div>
+        <form id="noteForm" class="panel form-panel">
+          <label for="noteTitle">ЗАГОЛОВОК</label><input id="noteTitle" maxlength="70" placeholder="Название заметки" required>
+          <label for="noteBody">ТВОЯ МЫСЛЬ</label><textarea id="noteBody" rows="4" maxlength="1200" placeholder="Запиши идею, пока она не убежала…" required></textarea>
+          <button class="primary-btn full" type="submit">Сохранить заметку ↗</button>
+        </form>
+        <div id="notesList" class="note-list"></div>
+      </section>
+
+      <section id="focusView" class="view">
+        <div class="section-heading"><div><div class="eyebrow">ОДНО ДЕЛО ЗА РАЗ</div><h2>Режим фокуса</h2></div><span class="section-mark">04 / 04</span></div>
+        <div class="panel focus-panel">
+          <div class="eyebrow">СЕССИЯ ГЛУБОКОЙ РАБОТЫ</div>
+          <div class="timer" id="timer">25:00</div>
+          <div class="timer-caption" id="timerCaption">Время выбрать одну цель.</div>
+          <div class="timer-presets"><button class="preset active" data-minutes="25">25 мин</button><button class="preset" data-minutes="15">15 мин</button><button class="preset" data-minutes="5">5 мин</button></div>
+          <div class="timer-actions"><button id="timerStart" class="primary-btn">Начать фокус</button><button id="timerReset" class="secondary-btn">Сбросить</button></div>
+          <div class="focus-tip"><span>✳</span><p>Убери лишнее, выбери одну задачу и просто начни. Перерыв будет потом.</p></div>
+        </div>
+      </section>
+    </main>
+
+    <footer><div class="footer-mark">JDX<span>•</span></div><div>СДЕЛАНО ДЛЯ ТВОИХ ИДЕЙ</div><button id="exportBtn" class="text-btn">Экспорт данных ↗</button></footer>
+  </div>
+
+  <div id="taskModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <form id="modalTaskForm" class="modal-card panel"><button type="button" id="modalClose" class="modal-close" aria-label="Закрыть">×</button><div class="eyebrow">НОВЫЙ ШАГ</div><h2 id="modalTitle">Добавить задачу</h2><label for="modalTaskInput">ЧТО НУЖНО СДЕЛАТЬ?</label><input id="modalTaskInput" maxlength="120" placeholder="Напиши задачу…" required><button class="primary-btn full" type="submit">Сохранить задачу</button></form>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
